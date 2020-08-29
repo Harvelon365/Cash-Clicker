@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+    <head><title>0 Cash</title></head>
+    <link rel="stylesheet" href="main.css"></link>
+    <body style="overflow-y: hidden;">
+        <div class="sectionRight"> 
+            <div id="upgradeContainer"></div>
+            <div id="shopContainer"></div>
+        </div>
+        <div class="sectionMiddle">
+            <div id="statsContainer">Hello</div>
+            <div id="achievementsContainer">Hello</div>
+        </div>
+        <div class="sectionLeft">
+            <center>
+                <div class="scoreContainer unselectable">
+                    <p><span id="cashCount">0</span> Cash</p>
+                    <p><span id="cps">0</span>/cps</p>
+                </div>
+                <div class="clickerContainer">
+                    <img src="images/Cash.png" id="clicker">
+                </div>
+            </center>
+            <div class="sectionFooter">
+                <h5></h5>
+                <button onclick="resetGame();">Reset Game</button>
+                <button onclick="saveGame();">Save Game</button>
+            </div>
+        </div>
+        <center>
+            <div class="toast">Saved!</div>
+        </center>
+        <script src="main.js"></script>
+    </body>
+</html>
