@@ -1,3 +1,13 @@
+@font-face{
+    font-family: Varela;
+    src: url(VarelaRound-Regular.ttf)
+}
+
+*{
+    font-family: Varela;
+    z-index: 2;
+}
+
 .sectionLeft{
     float: left;
     height: 95vh;
@@ -157,6 +167,7 @@
 }
 #upgradeContainer:hover{
     height: auto;
+    min-height: 155.5px;
 }
 
 
@@ -169,6 +180,13 @@
 
 
 #achievementsContainer{
+    background-color: rgba(204, 203, 203, 0.6);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+
+#optionsContainer{
     background-color: rgba(204, 203, 203, 0.6);
     border-radius: 10px;
     padding: 5px;
@@ -230,3 +248,4 @@
 #upgradeButtonTooltip{
     display: inline-block;
 }
+

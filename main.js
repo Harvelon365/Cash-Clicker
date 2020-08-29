@@ -57,11 +57,11 @@ var building = {
         "Mine"
     ],
     image: [
-        "Cursor.png",
-        "Grandma.png",
-        "Farm.png",
-        "Bakery.png",
-        "Mine.png"
+        "unknown.png",
+        "unknown.png",
+        "unknown.png",
+        "unknown.png",
+        "unknown.png"
     ],
     count: [0, 0, 0, 0, 0],
     income: [
@@ -116,15 +116,15 @@ var upgrade = {
         "Cash production multiplier +1%"
     ],
     image:[
-        "ButterCursor.png",
-        "StoneCursor.png",
-        "Mouse.png",
-        "MetalCursor.png",
-        "Mouse.png",
-        "Mouse.png",
-        "Cream1.png",
-        "Cream2.png",
-        "Cream3.png"
+        "unknown.png",
+        "unknown.png",
+        "unknown.png",
+        "unknown.png",
+        "unknown.png",
+        "unknown.png",
+        "unknown.png",
+        "unknown.png",
+        "unknown.png",
     ],
     type:[
         "building",
@@ -258,6 +258,16 @@ var display = {
                 }
             }
         }
+    },
+
+    updateStats: function(){
+        document.getElementById("statsContainer").innerHTML = '<h2><center>Stats</center></h2>'
+        document.getElementById("statsContainer").innerHTML += 'Cash in bank: '+game.cash.toFixed(0)+' cash<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Total cash printed: '+game.totalCash.toFixed(0)+' cash<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Buildings owned: '+building.count.reduce(sum)+'<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Cash per second: '+game.getCashPerSecond().toFixed(0)+' (multiplier: '+(game.cashMultiplier*100).toFixed(0)+'%)<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Cash per click: '+game.clickValue.toFixed(0)+'<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Total clicks: '+game.totalClicks.toFixed(0)+'<br/>'
     }
 };
 
@@ -327,6 +337,7 @@ window.onload = function(){
     display.updateScore();
     display.updateUpgrades();
     display.updateShop();
+    display.updateStats();
 };
 
 setInterval(function(){
@@ -341,12 +352,16 @@ setInterval(function(){
     display.updateScore();
     display.updateShop();
     display.updateUpgrades();
-    document.getElementById("statsContainer").innerHTML = 'Cash in bank: '+game.cash.toFixed(0)+'<br/>Cash printed (all time): '+game.totalCash.toFixed(0)+''
+    display.updateStats();
 }, 1000);
 
 setInterval(function() {
     saveGame();
 }, 30000);
+
+function clickValueSet(){
+    document.getElementById("clickValueDisplay").innerText = game.clickValue.toFixed(0);
+}
 
 function sum(total, num){
     return total + num;
