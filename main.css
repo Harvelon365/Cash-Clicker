@@ -1,0 +1,232 @@
+.sectionLeft{
+    float: left;
+    height: 95vh;
+    width: 49%;
+}
+.sectionMiddle{
+    float: right;
+    width: 25%;
+    height: 96vh;
+    overflow-y: scroll;
+    background-color: rgb(238, 238, 238, 0.6);
+    margin-top: 5px;
+    margin-right: 1%;
+    border-radius: 10px;
+}
+.sectionRight{
+    float: right;
+    width: 25%;
+    height: 96vh;
+    overflow-y: scroll;
+    background-color: rgb(238, 238, 238, 0.6);
+    margin-top: 5px;
+    border-radius: 10px;
+}
+
+
+.scoreContainer{
+    background-color: rgb(238, 238, 238, 0.6);
+    width: 50%;
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+
+.clickerContainer img{
+    top: 10px;
+    position: relative;
+    width: 40%;
+    transition: all .05s ease-in-out;
+}
+.clickerContainer img:hover{
+    transform: scale(1.05);
+}
+.clickerContainer img:active{
+    transform: scale(0.99);
+}
+
+
+#shopContainer{
+    background-color: rgba(204, 203, 203, 0.6);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+.shopButtonGreyed{
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: all .1s ease-in-out;
+    border-radius: 10px;
+    width: 100%;
+    margin: 10px 0px 10px 0px;
+}
+.shopButtonGreyed #image{
+    width: 25%;
+}
+.shopButtonGreyed img{
+    width: 64px;
+}
+.shopButtonGreyed #nameAndCost p{
+    margin: 0px;
+    width: 60%;
+}
+.shopButtonGreyed #nameAndCost p:first-of-type{
+    font-size: 24px;
+}
+.shopButtonGreyed #amount{
+    font-size: 48px;
+    float: right;
+    position: relative;
+    right: 15px;
+    top: 5px;
+}
+.shopButton{
+    background-color: rgb(238, 238, 238, 0.6);
+    transition: all .1s ease-in-out;
+    border-radius: 10px;
+    width: 100%;
+    margin: 10px 0px 10px 0px;
+}
+.shopButton:hover{
+    background-color: rgba(255, 255, 255, 1);
+    transition: all .1s ease-in-out;
+}
+.shopButton #image{
+    width: 25%;
+}
+.shopButton img{
+    width: 64px;
+}
+.shopButton #nameAndCost p{
+    margin: 0px;
+    width: 60%;
+}
+.shopButton #nameAndCost p:first-of-type{
+    font-size: 24px;
+}
+.shopButton #amount{
+    font-size: 48px;
+    float: right;
+    position: relative;
+    right: 15px;
+    top: 5px;
+}
+
+
+.unselectable{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+.sectionFooter{
+    margin-top: 10%;
+}
+
+
+.upgradeImg{
+    height: 64px;
+    width: 64px;
+    background-color: rgb(238, 238, 238, 0.6);
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+.upgradeImgGrey{
+    height: 64px;
+    width: 64px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+}
+.upgradeImg:hover{
+    background-color: rgba(255, 255, 255, 1);
+    transition: all .1s ease-in-out;
+}
+#upgradeContainer{
+    height: 155.5px;
+    padding: 5px;
+    margin: 5px;
+    background-color: rgba(204, 203, 203, 0.6);
+    border-radius: 10px;
+    overflow: hidden;
+}
+#upgradeContainer:hover{
+    height: auto;
+}
+
+
+#statsContainer{
+    background-color: rgba(204, 203, 203, 0.6);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+
+
+#achievementsContainer{
+    background-color: rgba(204, 203, 203, 0.6);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+
+
+.toast{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    max-width: 400px;
+    padding: 6px;
+    background: #cccccc;
+    color: #333333;
+    text-align: center;
+    font-weight: bold;
+    border: 1px;
+    border-radius: 10px;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s, bottom 0.2s, visibility 0.2s;
+}
+.toast--visible{
+    bottom: 20px;
+    opacity: 1;
+    visibility: visible;
+}
+
+
+#shopButtonTooltip:hover::before{
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    min-width: 200px;
+    border: 1px #808080 solid;
+    padding: 8px;
+    color: white;
+    background-color: black;
+    z-index: 1000000;
+}
+#upgradeButtonTooltip:hover::before{
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    min-width: 200px;
+    border: 1px #808080 solid;
+    padding: 8px;
+    color: white;
+    background-color: black;
+    z-index: 1000000;
+}
+#upgradeButtonTooltip{
+    display: inline-block;
+}
