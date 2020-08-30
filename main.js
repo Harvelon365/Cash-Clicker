@@ -1,3 +1,5 @@
+var difference
+
 const Toast ={
     init(){
         this.hideTimeout = null;
@@ -57,11 +59,11 @@ var building = {
         "Mine"
     ],
     image: [
-        "unknown.png",
-        "unknown.png",
-        "unknown.png",
-        "unknown.png",
-        "unknown.png"
+        "Cursor.png",
+        "Grandma.png",
+        "Farm.png",
+        "Bakery.png",
+        "Mine.png"
     ],
     count: [0, 0, 0, 0, 0],
     income: [
@@ -116,15 +118,15 @@ var upgrade = {
         "Cash production multiplier +1%"
     ],
     image:[
-        "unknown.png",
-        "unknown.png",
-        "unknown.png",
-        "unknown.png",
-        "unknown.png",
-        "unknown.png",
-        "unknown.png",
-        "unknown.png",
-        "unknown.png",
+        "ButterCursor.png",
+        "StoneCursor.png",
+        "Mouse.png",
+        "MetalCursor.png",
+        "Mouse.png",
+        "Mouse.png",
+        "Cream1.png",
+        "Cream2.png",
+        "Cream3.png",
     ],
     type:[
         "building",
@@ -225,9 +227,9 @@ var display = {
         document.getElementById("shopContainer").innerHTML = "<h2><center>Shop</center></h2>";
         for (i = 0; i < building.name.length; i++){
             if (game.cash>=building.cost[i]){
-                document.getElementById("shopContainer").innerHTML += '<table id="shopButtonTooltip" class="shopButton unselectable" data-tooltip="Production per unit: '+building.income[i]+'/cps -- Total Production: '+(building.income[i] * building.count[i]).toFixed(0)+'/cps" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/buildings/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cash</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>'
+                document.getElementById("shopContainer").innerHTML += '<table id="shopButtonTooltip" class="shopButton unselectable" data-tooltip="Production per unit: '+building.income[i]+'/cps -- Total Production: '+(building.income[i] * building.count[i]).toFixed(0)+'/cps" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/buildings/'+building.image[i]+'" onerror="imgError(this);"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cash</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>'
             }else{
-                document.getElementById("shopContainer").innerHTML += '<table id="shopButtonTooltip" class="shopButtonGreyed unselectable" data-tooltip="Production per unit: '+building.income[i]+'/cps -- Total Production: '+(building.income[i] * building.count[i]).toFixed(0)+'/cps" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/buildings/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cash</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>'
+                document.getElementById("shopContainer").innerHTML += '<table id="shopButtonTooltip" class="shopButtonGreyed unselectable" data-tooltip="Production per unit: '+building.income[i]+'/cps -- Total Production: '+(building.income[i] * building.count[i]).toFixed(0)+'/cps" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/buildings/'+building.image[i]+'" onerror="imgError(this);"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cash</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>'
             }
             
         }
@@ -239,21 +241,21 @@ var display = {
             if (!upgrade.purchased[i]){
                 if (upgrade.type[i] == "building" && building.count[upgrade.buildingIndex[i]] >= upgrade.requirement[i]){
                     if(game.cash>=upgrade.cost[i]){
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }else{
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }
                 }else if (upgrade.type[i] == "click" && game.totalClicks >= upgrade.requirement[i]){
                     if(game.cash>=upgrade.cost[i]){
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }else{
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }
                 }else if (upgrade.type[i] == "cps" && game.totalCash >= upgrade.requirement[i]){
                     if(game.cash>=upgrade.cost[i]){
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }else{
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  -- '+upgrade.description[i]+' - ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }
                 }
             }
@@ -283,6 +285,7 @@ function saveGame(){
         buildingIncome: building.income,
         buildingCost: building.cost,
         upgradePurchased: upgrade.purchased,
+        timeSaved: new Date().getTime()
     }
     localStorage.setItem("gameSave", JSON.stringify(gameSave));
     Toast.show("Game Saved!")
@@ -315,6 +318,18 @@ function loadGame(){
             for (i = 0; i < savedGame.upgradePurchased.length; i++){
                 upgrade.purchased[i] = savedGame.upgradePurchased[i];
             }
+        }
+        if (typeof savedGame.timeSaved !== "undefined"){
+            var now = new Date();
+            difference = 0;
+            difference = now.getTime() - savedGame.timeSaved;
+            difference /= 1000;
+            difference = Math.abs(difference).toFixed(0);
+            difference *= (game.getCashPerSecond()*0.15).toFixed(0);
+            saveGame();
+            game.cash += difference;
+
+            Toast.show("You earned "+difference+" cash while you were away!")
         }
     }
 };
@@ -391,3 +406,29 @@ document.addEventListener("keydown", function(event){
         saveGame();
     }
 }, false);
+
+function imgError(image) {
+    image.onerror = "";
+    image.src = "images/unknown.png";
+    return true;
+}
+
+
+function openTab(evt, tabName){
+    var i, tabcontent, tablinks;
+
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i=0; i<tabcontent.length; i++){
+        tabcontent[i].style.display = "none";
+    }
+
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i=0; i<tablinks.length; i++){
+        tablinks[i].className = tablinks[i].className.replace("active", "");
+    }
+
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+document.getElementById("defaultOpen").click();

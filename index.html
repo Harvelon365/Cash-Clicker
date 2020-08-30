@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
-<html>
-    <head><title>0 Cash</title></head>
+<html lang="en" class="notranslate" translate="no">
+    <head><meta name="google" content="notranslate" /><title>0 Cash</title></head>
     <link rel="stylesheet" href="main.css"></link>
     <body style="overflow-y: hidden;">
         <div class="sectionRight"> 
@@ -8,9 +8,15 @@
             <div id="shopContainer"></div>
         </div>
         <div class="sectionMiddle">
-            <div id="statsContainer"><h2><center>Stats</center></h2></div>
-            <div id="achievementsContainer"><h2><center>Achievements</center></h2></div>
-            <div id="optionsContainer"><h2><center>Options</center></h2>
+            <div class="tab">
+                    <button class="tablinks" onclick="openTab(event, 'statsContainer')" id="defaultOpen">Stats</button>
+                    <button class="tablinks" onclick="openTab(event, 'achievementsContainer')">Achievements</button>
+                    <button class="tablinks" onclick="openTab(event, 'optionsContainer')">Options</button>
+            </div>
+
+            <div id="statsContainer" class="tabcontent"><h2><center>Stats</center></h2></div>
+            <div id="achievementsContainer" class="tabcontent"><h2><center>Achievements</center></h2></div>
+            <div id="optionsContainer" class="tabcontent"><h2><center>Options</center></h2>
                 <button onclick="resetGame();">Reset Game</button>
                 <br>
                 <button onclick="saveGame();">Save Game</button>
@@ -23,7 +29,7 @@
                     <p><span id="cps">0</span>/cps</p>
                 </div>
                 <div class="clickerContainer">
-                    <img src="images/Cash.png" id="clicker">
+                    <img src="images/Cash.png" id="clicker" onerror="imgError(this);">
                 </div>
             </center>
         </div>
