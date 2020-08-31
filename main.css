@@ -186,6 +186,13 @@
     margin: 5px;
 }
 
+#upgradeUnlockedContainer{
+    background-color: rgba(204, 203, 203, 0.6);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+
 #optionsContainer{
     background-color: rgba(204, 203, 203, 0.6);
     border-radius: 10px;
@@ -248,6 +255,7 @@
 #upgradeButtonTooltip{
     display: inline-block;
 }
+
 
 
 .tab{

@@ -10,12 +10,16 @@
         <div class="sectionMiddle">
             <div class="tab">
                     <button class="tablinks" onclick="openTab(event, 'statsContainer')" id="defaultOpen">Stats</button>
-                    <button class="tablinks" onclick="openTab(event, 'achievementsContainer')">Achievements</button>
+                    <button class="tablinks" onclick="openTab(event, 'unlockablesContainer')">Unlockables</button>
                     <button class="tablinks" onclick="openTab(event, 'optionsContainer')">Options</button>
+                    <button>Ascension</button>
             </div>
 
             <div id="statsContainer" class="tabcontent"><h2><center>Stats</center></h2></div>
-            <div id="achievementsContainer" class="tabcontent"><h2><center>Achievements</center></h2></div>
+            <div id="unlockablesContainer" class="tabcontent"><h2><center>Unlockables</center></h2>
+                <div id="achievementsContainer"><h2><center>Achievements</center></h2></div>
+                <div id="upgradeUnlockedContainer"><h2><center>Upgrades</center></h2></div>
+            </div>
             <div id="optionsContainer" class="tabcontent"><h2><center>Options</center></h2>
                 <button onclick="resetGame();">Reset Game</button>
                 <br>
