@@ -12,7 +12,7 @@ const Toast ={
     show(message){
         clearTimeout(this.hideTimeout);
 
-        this.el.textContent = message;
+        this.el.innerHTML = message;
         this.el.className = "toast toast--visible";
         this.hideTimeout = setTimeout(() =>{
             this.el.className = "toast";
@@ -163,29 +163,60 @@ var upgrade = {
 
 var achievement = {
     name:[
-        "The start of something great..."
+        "The start of something great...",
+        "Poke poke"
     ],
     description:[
-        "Click the cookie one time"
+        "Click the bank note one time",
+        "Purchase one cursor"
     ],
     image:[
+        "Click1.png",
         "Cursor.png"
     ],
     type:[
-        "click"
+        "click",
+        "building"
     ],
     requirement:[
+        1,
         1
     ],
     buildingIndex:[
-        -1
+        -1,
+        0
     ],
     done:[
-        false
+        false,false
     ],
+
+    
 };
 
 var display = {
+    checkAchievements: function(){
+        for (i = 0; i < achievement.name.length; i++){
+            if (!achievement.done[i]){
+                if (achievement.type[i] == "cookies" && achievement.requirement[i] <= game.totalCookies){
+                    achievement.done[i] = true;
+                    Toast.show("<b>"+achievement.name[i] + "</b><br/>" + achievement.description[i])
+                }
+                if (achievement.type[i] == "click" && achievement.requirement[i] <= game.totalClicks){
+                    achievement.done[i] = true;
+                    Toast.show("<b>"+achievement.name[i] + "</b><br/>" + achievement.description[i])
+                }
+                if (achievement.type[i] == "cps" && achievement.requirement[i] <= game.getCookiesPerSecond()){
+                    achievement.done[i] = true;
+                    Toast.show("<b>"+achievement.name[i] + "</b><br/>" + achievement.description[i])
+                }
+                if (achievement.type[i] == "building" && building.count[achievement.buildingIndex[i]] >= achievement.requirement[i]){
+                    achievement.done[i] = true;
+                    Toast.show("<b>"+achievement.name[i] + "</b><br/>" + achievement.description[i])
+                }
+            }
+        }
+    },
+
     updateScore: function(){
         document.getElementById("cashCount").innerHTML = game.cash.toFixed(0);
         document.getElementById("cps").innerHTML = game.getCashPerSecond().toFixed(1);
@@ -253,12 +284,12 @@ var display = {
     },
 
     updateAchievements: function(){
-        document.getElementById("achievementsContainer").innerHTML = "<h2><center>Achievements</center></h2>";
+        document.getElementById("achievementsContainer").innerHTML = "<h2><center>Achievements ("+detectAchievements()+"/"+achievement.name.length+")</center></h2>";
         for (i = 0; i < achievement.name.length; i++){
             if(achievement.done[i]){
                 document.getElementById("achievementsContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+achievement.name[i]+'  --  '+achievement.description[i]+'"><img src="images/achievements/'+achievement.image[i]+'" class="upgradeImgGrey" onerror="imgError(this);"></div>';
             }else{
-                document.getElementById("achievementsContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+achievement.name[i]+'  --  '+achievement.description[i]+'"><img src="images/unknown.png" class="upgradeImgGrey" onerror="imgError(this);"></div>';
+                document.getElementById("achievementsContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="?????????????"><img src="images/unknown.png" class="upgradeImgGrey" onerror="imgError(this);"></div>';
             }
         }
     }
@@ -273,6 +304,7 @@ function saveGame(){
         cashMultiplier: game.cashMultiplier,
         offlineMultiplier: game.offlineMultiplier,
         version: game.version,
+        achievementDone: achievement.done,
         buildingCount: building.count,
         buildingIncome: building.income,
         buildingCost: building.cost,
@@ -292,6 +324,11 @@ function loadGame(){
         if (typeof savedGame.clickValue !== "undefined") game.clickValue = savedGame.clickValue;
         if (typeof savedGame.cashMultiplier !== "undefined") game.cashMultiplier = savedGame.cashMultiplier;
         if (typeof savedGame.offlineMultiplier !== "undefined") game.offlineMultiplier = savedGame.offlineMultiplier;
+        if (typeof savedGame.achievementDone !== "undefined"){
+            for (i = 0; i < savedGame.achievementDone.length; i++){
+                achievement.done[i] = savedGame.achievementDone[i];
+            }
+        }
         if (typeof savedGame.buildingCount !== "undefined"){
             for (i = 0; i < savedGame.buildingCount.length; i++){
                 building.count[i] = savedGame.buildingCount[i];
@@ -313,9 +350,9 @@ function loadGame(){
             }
         }
         if (typeof savedGame.timeSaved !== "undefined"){
-
-            Toast.show("You earned "+offlineProduction(savedGame.timeSaved)+" cash while you were away ("+offlineTime(savedGame.timeSaved)+")")
-            
+            if(offlineProduction(savedGame.timeSaved) > 0){
+                Toast.show("<b>You earned "+offlineProduction(savedGame.timeSaved)+" cash while you were away</b><br/>("+offlineTime(savedGame.timeSaved)+")")
+            }
         }
     }
 };
@@ -356,6 +393,7 @@ setInterval(function(){
     display.updateUpgrades();
     display.updateAchievements();
     display.updateStats();
+    display.checkAchievements();
 }, 1000);
 
 setInterval(function() {
@@ -374,6 +412,15 @@ function detectUpgrades(){
     var count = 0;
     for(i = 0; i < upgrade.purchased.length; i++){
         if (upgrade.purchased[i] == true)
+        count++;
+    }
+    return count;
+}
+
+function detectAchievements(){
+    var count = 0;
+    for(i = 0; i < achievement.done.length; i++){
+        if (achievement.done[i] == true)
         count++;
     }
     return count;
@@ -437,7 +484,7 @@ function offlineTime(oldTime){
     var differenceMin = differenceSec / 60;
     var differenceHour = differenceMin / 60;
     saveGame();
-    return(differenceHour.toFixed(0)+":"+differenceMin.toFixed(0)+":"+differenceSec.toFixed(0))
+    return(differenceHour.toFixed(0)+"h:"+differenceMin.toFixed(0)+"m:"+differenceSec.toFixed(0)+"s")
     
 }
 
