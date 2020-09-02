@@ -218,18 +218,18 @@ var display = {
     },
 
     updateScore: function(){
-        document.getElementById("cashCount").innerHTML = game.cash.toFixed(0);
-        document.getElementById("cps").innerHTML = game.getCashPerSecond().toFixed(1);
-        document.title = game.cash.toFixed(0) + " cash";
+        document.getElementById("cashCount").innerHTML = abbreviateNumber(game.cash.toFixed(0));
+        document.getElementById("cps").innerHTML = abbreviateNumber(game.getCashPerSecond().toFixed(1));
+        document.title = abbreviateNumber(game.cash.toFixed(0)) + " cash";
     },
 
     updateShop: function(){
         document.getElementById("shopContainer").innerHTML = "<h2><center>Shop</center></h2>";
         for (i = 0; i < building.name.length; i++){
             if (game.cash>=building.cost[i]){
-                document.getElementById("shopContainer").innerHTML += '<table id="shopButtonTooltip" class="shopButton unselectable" data-tooltip="Production per unit: '+building.income[i]+'/cps  --  Total Production: '+(building.income[i] * building.count[i]).toFixed(0)+'/cps" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/buildings/'+building.image[i]+'" onerror="imgError(this);"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cash</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>'
+                document.getElementById("shopContainer").innerHTML += '<table id="shopButtonTooltip" class="shopButton unselectable" data-tooltip="Production per unit: '+building.income[i]+'/cps  --  Total Production: '+(building.income[i] * building.count[i]).toFixed(0)+'/cps" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/buildings/'+building.image[i]+'" onerror="imgError(this);"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+abbreviateNumber(building.cost[i])+'</span> cash</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>'
             }else{
-                document.getElementById("shopContainer").innerHTML += '<table id="shopButtonTooltip" class="shopButtonGreyed unselectable" data-tooltip="Production per unit: '+building.income[i]+'/cps  --  Total Production: '+(building.income[i] * building.count[i]).toFixed(0)+'/cps" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/buildings/'+building.image[i]+'" onerror="imgError(this);"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cash</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>'
+                document.getElementById("shopContainer").innerHTML += '<table id="shopButtonTooltip" class="shopButtonGreyed unselectable" data-tooltip="Production per unit: '+building.income[i]+'/cps  --  Total Production: '+(building.income[i] * building.count[i]).toFixed(0)+'/cps" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/buildings/'+building.image[i]+'" onerror="imgError(this);"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+abbreviateNumber(building.cost[i])+'</span> cash</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>'
             }
             
         }
@@ -237,49 +237,49 @@ var display = {
 
     updateUpgrades: function(){
         document.getElementById("upgradeContainer").innerHTML = "<h2><center>Upgrades</center></h2>";
-        document.getElementById("upgradeUnlockedContainer").innerHTML = "<h2><center>Upgrades</center></h2>";
+        document.getElementById("upgradeUnlockedContainer").innerHTML = "<h2><center>Upgrades  ("+detectUpgrades()+"/"+upgrade.name.length+")</center></h2>";
         for (i = 0; i < upgrade.name.length; i++){
             if (!upgrade.purchased[i]){
                 if (upgrade.type[i] == "building" && building.count[upgrade.buildingIndex[i]] >= upgrade.requirement[i]){
                     if(game.cash>=upgrade.cost[i]){
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+abbreviateNumber(upgrade.cost[i])+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }else{
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+abbreviateNumber(upgrade.cost[i])+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }
                 }else if (upgrade.type[i] == "click" && game.totalClicks >= upgrade.requirement[i]){
                     if(game.cash>=upgrade.cost[i]){
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+abbreviateNumber(upgrade.cost[i])+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }else{
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+abbreviateNumber(upgrade.cost[i])+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }
                 }else if (upgrade.type[i] == "cps" && game.totalCash >= upgrade.requirement[i]){
                     if(game.cash>=upgrade.cost[i]){
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+abbreviateNumber(upgrade.cost[i])+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }else{
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+abbreviateNumber(upgrade.cost[i])+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }
                 }else if (upgrade.type[i] == "offline" && game.totalCash >= upgrade.requirement[i]){
                     if(game.cash>=upgrade.cost[i]){
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+abbreviateNumber(upgrade.cost[i])+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }else{
-                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
+                        document.getElementById("upgradeContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+abbreviateNumber(upgrade.cost[i])+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
                     }
                 }
             }else{
-                document.getElementById("upgradeUnlockedContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+upgrade.cost[i]+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImg" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
+                document.getElementById("upgradeUnlockedContainer").innerHTML += '<div id="upgradeButtonTooltip" data-tooltip="'+upgrade.name[i]+'  --  '+upgrade.description[i]+'  -  ('+abbreviateNumber(upgrade.cost[i])+' cash)"><img src="images/upgrades/'+upgrade.image[i]+'" class="upgradeImgGrey" onclick="upgrade.purchase('+i+')" onerror="imgError(this);"></div>';
             }
         }
     },
 
     updateStats: function(){
         document.getElementById("statsContainer").innerHTML = '<h2><center>Stats</center></h2>'
-        document.getElementById("statsContainer").innerHTML += 'Cash in bank: '+game.cash.toFixed(0)+' cash<br/>'
-        document.getElementById("statsContainer").innerHTML += 'Total cash printed: '+game.totalCash.toFixed(0)+' cash<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Cash in bank: '+abbreviateNumber(game.cash.toFixed(0))+' cash<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Total cash printed: '+abbreviateNumber(game.totalCash.toFixed(0))+' cash<br/>'
         document.getElementById("statsContainer").innerHTML += 'Buildings owned: '+building.count.reduce(sum)+'<br/>'
         document.getElementById("statsContainer").innerHTML += 'Upgrades purchased: '+detectUpgrades()+'<br/>'
-        document.getElementById("statsContainer").innerHTML += 'Cash per second: '+game.getCashPerSecond().toFixed(0)+' (multiplier: '+(game.cashMultiplier*100).toFixed(0)+'%)<br/>'
-        document.getElementById("statsContainer").innerHTML += 'Cash per click: '+game.clickValue.toFixed(0)+'<br/>'
-        document.getElementById("statsContainer").innerHTML += 'Total clicks: '+game.totalClicks.toFixed(0)+'<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Cash per second: '+abbreviateNumber(game.getCashPerSecond().toFixed(0))+' (multiplier: '+(game.cashMultiplier*100).toFixed(0)+'%)<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Cash per click: '+abbreviateNumber(game.clickValue.toFixed(0))+'<br/>'
+        document.getElementById("statsContainer").innerHTML += 'Total clicks: '+abbreviateNumber(game.totalClicks.toFixed(0))+'<br/>'
         document.getElementById("statsContainer").innerHTML += 'Offline multiplier: '+(game.offlineMultiplier*100).toFixed(1)+'%<br/>'
     },
 
@@ -309,7 +309,9 @@ function saveGame(){
         buildingIncome: building.income,
         buildingCost: building.cost,
         upgradePurchased: upgrade.purchased,
-        timeSaved: new Date().getTime()
+        timeSaved: new Date().getTime(),
+
+        numberShorten: document.getElementById("shortenNumbersCheck").checked
     }
     localStorage.setItem("gameSave", JSON.stringify(gameSave));
     Toast.show("Game Saved!")
@@ -324,6 +326,7 @@ function loadGame(){
         if (typeof savedGame.clickValue !== "undefined") game.clickValue = savedGame.clickValue;
         if (typeof savedGame.cashMultiplier !== "undefined") game.cashMultiplier = savedGame.cashMultiplier;
         if (typeof savedGame.offlineMultiplier !== "undefined") game.offlineMultiplier = savedGame.offlineMultiplier;
+        if (typeof savedGame.numberShorten !== "undefined") document.getElementById("shortenNumbersCheck").checked = savedGame.numberShorten;
         if (typeof savedGame.achievementDone !== "undefined"){
             for (i = 0; i < savedGame.achievementDone.length; i++){
                 achievement.done[i] = savedGame.achievementDone[i];
@@ -400,9 +403,7 @@ setInterval(function() {
     saveGame();
 }, 30000);
 
-function clickValueSet(){
-    document.getElementById("clickValueDisplay").innerText = game.clickValue.toFixed(0);
-}
+
 
 function sum(total, num){
     return total + num;
@@ -486,6 +487,31 @@ function offlineTime(oldTime){
     saveGame();
     return(differenceHour.toFixed(0)+"h:"+differenceMin.toFixed(0)+"m:"+differenceSec.toFixed(0)+"s")
     
+}
+
+function abbreviateNumber(num) {
+    if (document.getElementById("shortenNumbersCheck").checked == true){
+        if (num >= 1000000000000)
+        {
+            return (num / 1000000000000).toFixed(3) + " Trillion";
+        }
+        else if (num >= 1000000000)
+        {
+            return (num / 1000000000).toFixed(3) + " Billion";
+        }
+        else if (num >= 1000000)
+        {
+            return (num / 1000000).toFixed(3) + " Million";
+        }
+        else
+        {
+            return num;
+        }
+    }else{
+        var num_parts = num.toString().split(".");
+        num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return num_parts.join(".");
+    }
 }
 
 document.getElementById("defaultOpen").click();

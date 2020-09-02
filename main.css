@@ -6,6 +6,7 @@
 *{
     font-family: Varela;
     z-index: 2;
+    touch-action: manipulation;
 }
 
 .sectionLeft{
@@ -283,4 +284,15 @@
     display: none;
     padding: 6px 12px;
     border: none;
+}
+
+::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background-color: grey;
+}
+::-webkit-scrollbar{
+    width: 10px;
+}
+::-webkit-scrollbar-track{
+    border-radius: 15px;
 }
